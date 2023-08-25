@@ -31,12 +31,12 @@ export function PokemonList() {
 
     return (
         <main className="grid min-h-screen grid-cols-4 gap-5 py-5">
-            {false ? (
+            {load ? (
                 <Loading />
             ) : (
-                resul?.data.pokemon_species.map((pokemon, index) => (
+                resul?.data.pokemon_species.map((pokemon) => (
                     <PokemonCard 
-                        key={index}
+                        key={pokemon.name}
                         pokemonName={pokemon.name}
                         pokemonUrl={pokemon.url}
                     />

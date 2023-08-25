@@ -1,4 +1,6 @@
 import { useGetDescription } from "@/hooks/usePokemonApi";
+import { useListPokemonCart } from "@/stateGlobal/listPokemonCart";
+import { useCartModal } from "@/stateGlobal/modalCartStore";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
@@ -15,6 +17,10 @@ interface ColorProps {
 
 
 export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
+    const listPokemon = useListPokemonCart((state) => state.listCart)
+    const addPokemonOnList = useListPokemonCart((state) => state.addPokemonOnList)
+    const openCartModal = useCartModal((state) => state.openCartModal)
+
     const {data: results, isLoading, isError} = useQuery({
         queryKey: [`pokemonSoloDetails${pokemonName}`],
         queryFn: async () => 
@@ -32,6 +38,21 @@ export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
             staleTime: 100000,
     })
 
+    function addPokemonCart(response, results) {
+        const teste = listPokemon.find((list) => list.id === response.id)
+        if(!teste) {
+            addPokemonOnList({
+                id: response.id,
+                name: response.name,
+                type: results.types,
+                generation: response.generation.name,
+                color: response.color.name,
+            })
+            openCartModal()
+            return
+        }
+        console.log("pokemon ja está no carrinho")
+    }
     return (
         <>
             {!isLoading && !loading && (
@@ -60,7 +81,7 @@ export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
                             <p>{results?.data.height}</p>
                         </span>
                     </div>
-                    <div className="flex items-center justify-center gap-2">
+                    <div className="flex items-center justify-center gap-2 mb-5">
                         <p className="font-bold">Type:</p>
                         <span className="flex">
                             {results?.data.types.map((type, index) => (
@@ -71,6 +92,13 @@ export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
                             ))}
                         </span>
                     </div>
+                    <button
+                        onClick={() => addPokemonCart(response.data, results.data)}
+                        className={`w-full py-2 rounded-lg font-bold ${response?.data.color.name === "blue" ? "text-white" : "text-black"} hover:scale-105`} 
+                        style={{background: response?.data.color.name}}
+                    >
+                        Capture
+                    </button>
                 </div>
             )}
         </>

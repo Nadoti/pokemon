@@ -1,10 +1,14 @@
+"use client"
 import { Cart } from "@/components/Cart";
 import { Header } from "@/components/Header";
 import { PokemonList } from "@/components/pokemon/PokemonList";
+import { useCartModal } from "@/stateGlobal/modalCartStore";
 
 
 
 export default function Home() {
+  const isModal = useCartModal((state) => state.isModal)
+  
   return (
     <section className="w-full bg-[#F8F4F4]">
       <div>
@@ -13,7 +17,7 @@ export default function Home() {
           <PokemonList />
         </div>
       </div>
-      <Cart />
+      {isModal && <Cart />}
     </section>
   )
 }
