@@ -88,8 +88,12 @@ export function Cart() {
     removePokemonOnList(listPokemon.filter(list => list.id !== pokemon.id))
   }
 
+  function savePokemonInDatabase() {
+    console.log(listPokemon)
+  }
+
   return (
-    <section className="block absolute inset-0 bg-slate-950 bg-opacity-50">
+    <section className="block fixed inset-0 bg-slate-950 bg-opacity-50">
       <aside className="w-full relative max-w-lg h-full z-10 bg-white" ref={refModal}>
         <button
           onClick={() => closeCartModal()}
@@ -142,6 +146,7 @@ export function Cart() {
             </div>
             <div className="px-2 mt-5 pb-5">
               <button
+                onClick={savePokemonInDatabase}
                 className="w-full border-2 transition-all border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white py-4 font-bold rounded-md"
                 >
                   Capture

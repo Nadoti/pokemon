@@ -4,6 +4,7 @@ import { useCartModal } from "@/stateGlobal/modalCartStore";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 
 interface PokemonCardType {
@@ -47,6 +48,7 @@ export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
                 type: results.types,
                 generation: response.generation.name,
                 color: response.color.name,
+                status: results.stats,
             })
             openCartModal()
             return
@@ -56,8 +58,8 @@ export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
     return (
         <>
             {!isLoading && !loading && (
-                <div className={`w-full border rounded-lg p-2 cursor-pointer hover:shadow-2xl`} style={{borderColor: response?.data.color.name}}>
-                    <span className={`content-[''] w-5 h-5 block rounded-full`} style={{background: response?.data.color.name}}/>
+                <div  className={`w-full border rounded-lg p-2 cursor-pointer hover:shadow-2xl relative`} style={{borderColor: response?.data.color.name}}>
+                    <Link href={`/pokemon-details/${response?.data.id}`} className={`absolute top-0 left-0 p-4 rounded-r-full rounded-tl-lg ${response?.data.color.name === "blue" ? "text-white" : "text-black"} hover:scale-105`} style={{background: response?.data.color.name}}> Details</Link>
                     <div className="relative w-40 h-32 max-w-full mb-5 flex items-center justify-center mx-auto ">
                         <Image 
                             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${results?.data.id}.svg`}

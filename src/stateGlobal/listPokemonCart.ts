@@ -7,6 +7,12 @@ export type StateListCartModal = {
       type: { name: string }[];
       generation: string;
       color: string;
+      status: {
+        base_stat: number;
+        stat: {
+          name: string;
+        }
+      }[]
     }[];
   };
     
