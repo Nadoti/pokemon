@@ -1,11 +1,10 @@
-import { useGetDescription } from "@/hooks/usePokemonApi";
 import { useListPokemonCart } from "@/stateGlobal/listPokemonCart";
 import { useCartModal } from "@/stateGlobal/modalCartStore";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from 'react-toastify';
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
 
 interface PokemonCardType {
     pokemonName: string;
@@ -61,10 +60,17 @@ export function PokemonCard({ pokemonName, pokemonUrl }: PokemonCardType) {
                 } )
             })
             openCartModal()
-            console.log(listPokemon)
             return
         }
-        console.log("pokemon ja está no carrinho")
+        toast.error(`Pokemon is already in the cart`, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
     return (
         <>

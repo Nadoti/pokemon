@@ -14,28 +14,16 @@ export async function POST(
   req: Request,
   res: Response
 ) {
-  const allPokemons = await prisma.pokemon.findUnique({
-    where: {
-      id: 10
-    }
-  })
-  const takeType = await prisma.type.findMany({
-    where: {
-      idPokemon: 10
-    }
-  })
-  const takestatus = await prisma.status.findMany({
-    where: {
-      idPokemon: 10
-    }
-  })
 
   const body = await req.json()
-  const isPokemonExist = body.find((pokemon) => pokemon.id === allPokemons.id)
+  const allPokemons = await prisma.pokemon.findMany()
+  const isPokemonExist = body.find((pokemon) => {
+    return allPokemons.some((element) => element.id === pokemon.id);
+  });
 
   if(isPokemonExist) {
     return NextResponse.json(
-      { error: `O Pokemon ${isPokemonExist.name} já está capturado`},
+      { error: `The pokemon ${isPokemonExist.name} is already captured`},
       { status: 400}
     )
   }
@@ -56,21 +44,6 @@ export async function POST(
       }
     })
   })
-  
-  // const { searchParams } = new URL(req.url)
-  // const id = searchParams.get('id')
-  
-
-  // const prisma = new PrismaClient()
-  // const a = await prisma.pokemon.create({
-  //   data: {
-  //     name: "Bulbasaur",
-  //     generation: "Bulbasaur",
-  //     color: "Bulbasaur",
-  //     id: 1,
-  //   }
-  // })
-  // console.log("dsaas", body)
   
   return NextResponse.json( body, { status: 200})
 }

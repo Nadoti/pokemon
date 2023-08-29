@@ -3,7 +3,9 @@ import { Cart } from "@/components/Cart";
 import { Header } from "@/components/Header";
 import { PokemonList } from "@/components/pokemon/PokemonList";
 import { useCartModal } from "@/stateGlobal/modalCartStore";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React from 'react'
 
 
 export default function Home() {
@@ -16,6 +18,7 @@ export default function Home() {
           <PokemonList />
         </div>
       </div>
+      <ToastContainer />
       {isModal && <Cart />}
     </section>
   )

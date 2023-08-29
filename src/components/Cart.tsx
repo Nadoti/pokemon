@@ -4,6 +4,7 @@ import { useCartModal } from "@/stateGlobal/modalCartStore"
 import Image from "next/image"
 import { useEffect, useRef } from "react"
 import axios from "axios"
+import { toast } from 'react-toastify';
 
 export function Cart() {
   const refModal = useRef(null)
@@ -32,11 +33,34 @@ export function Cart() {
   }
 
   async function savePokemonInDatabase() {
-    const respo = await axios.post("http://localhost:3000/api/capture-pokemon", listPokemon)
-    if(respo.status === 200) {
-      console.log("CAIU aqui")
-      cleanList()
-      closeCartModal()
+    try {
+      const response = await axios.post("http://localhost:3000/api/capture-pokemon", listPokemon)
+      if(response.status === 200) {
+        toast.success('Pokemon saved successfully!', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        cleanList()
+        closeCartModal()
+      }
+    } catch (error: any) {
+      if(error?.response?.status === 400) {
+        toast.error(`${error.response.data.error}`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        return
+      }
     }
   }
 
@@ -54,7 +78,7 @@ export function Cart() {
                 <h1 className="text-3xl text-gray-700">Lista de Pokemons</h1>
             </div>
             <div className={`flex flex-col gap-5 overflow-y-scroll flex-1 px-2 pt-4 `}>
-              {listPokemon.map((pokemon, index) => (
+              {listPokemon.map((pokemon: any, index: any) => (
                 <div 
                   key={index}
                   className={`border rounded-lg flex items-center justify-between px-4 relative ${pokemon.color === "blue" ? "text-white" : "text-black"}`}
@@ -82,7 +106,7 @@ export function Cart() {
                     <h2 className=" text-xl">{pokemon.name}</h2>
                   </div>
                   <ul>
-                      {pokemon?.type?.map((type, i) => (
+                      {pokemon?.type?.map((type: any, i: number) => (
                           <li key={i}>{type.name}</li>
                       ))}
                   </ul>

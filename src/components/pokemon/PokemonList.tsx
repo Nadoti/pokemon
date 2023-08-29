@@ -1,5 +1,4 @@
 "use client"
-import { useGetAllPokemon } from "@/hooks/usePokemonApi";
 import { Fragment, useState } from "react";
 import { PokemonCard } from "./PokemonCard";
 import axios from "axios";
@@ -8,19 +7,6 @@ import { Loading } from "../Loading";
 import { pokemonGenerations } from "@/data/pokemonGenerations";
 
 export function PokemonList() {
-    // const {
-    //     isLoading,
-    //     data: pokemonPage,
-    //     error,
-    // } = useGetAllPokemon();
-
-    // if(isLoading) {
-    //     return "Carregando"
-    // }
-
-    // if(error) {
-    //     return "Erro"
-    // }
     const [idGeneration, setIdGeneration] = useState(1)
 
     const {data: resul, isLoading: load, isError: err} = useQuery({
@@ -29,7 +15,6 @@ export function PokemonList() {
             axios.get(`https://pokeapi.co/api/v2/generation/${idGeneration}/`),
             staleTime: 100000,
     })
-    console.log(idGeneration)
     function changeGenerationPokemon(id: number) {
         setIdGeneration(id)
     }

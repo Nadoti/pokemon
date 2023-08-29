@@ -5,9 +5,9 @@ module.exports = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: 'img.pokemondb.net',
+          hostname: 'raw.githubusercontent.com',
           port: '',
-          pathname: '/artwork/large/**',
+          pathname: '/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/**',
         },
       ],
     },

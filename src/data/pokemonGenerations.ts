@@ -24,19 +24,4 @@ export const pokemonGenerations = [
       id: 5,
       name: "generation-v"
   },
-  {
-      label: "VI",
-      id: 6,
-      name: "generation-vi"
-  },
-  {
-      label: "VII",
-      id: 7,
-      name: "generation-vii"
-  },
-  {
-      label: "VIII",
-      id: 8,
-      name: "generation-viii"
-  },
 ]
