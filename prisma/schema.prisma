@@ -6,6 +6,33 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+
+
+model Type {
+  id              Int     @id @default(autoincrement())
+  slot            Int
+  name            String
+  typePokemon     Pokemon @relation(fields: [idPokemon], references: [id])
+  idPokemon       Int
+}
+
+model Status {
+  idStatus        Int      @id @default(autoincrement())
+  baseStatus      Int
+  name            String
+  pokemon         Pokemon @relation(fields: [idPokemon], references: [id])
+  idPokemon       Int
+}
+
+model Pokemon {
+  id              Int @unique
+  name            String
+  generation      String
+  color           String
+  status          Status[]
+  type            Type[]
 }

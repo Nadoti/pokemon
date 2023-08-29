@@ -9,7 +9,7 @@ export function Loading() {
         //     </svg>
         //     <span className="text-black">Buscando...</span>
         // </div>
-        <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center">
+        <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-[#F8F4F4]">
             <div className="loading ">
                 Catching Pokemon...
             </div>

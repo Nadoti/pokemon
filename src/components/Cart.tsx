@@ -2,66 +2,8 @@
 import { useListPokemonCart } from "@/stateGlobal/listPokemonCart"
 import { useCartModal } from "@/stateGlobal/modalCartStore"
 import Image from "next/image"
-import { Fragment, ReactNode, useEffect, useRef } from "react"
-
-const arrayPokemon = [
-    {
-      id: 1,
-      name: "Bulbasaur",
-      type: [
-        {
-          name: "grass"
-        },
-        {
-          name: "poison"
-        },
-      ],
-      generation: "generation-i",
-      color: "green",
-    },
-    {
-        id: 1,
-        name: "Bulbasaur",
-        type: [
-          {
-            name: "grass"
-          },
-          {
-            name: "poison"
-          },
-        ],
-        generation: "generation-i",
-        color: "green",
-      },
-      {
-        id: 1,
-        name: "Bulbasaur",
-        type: [
-          {
-            name: "grass"
-          },
-          {
-            name: "poison"
-          },
-        ],
-        generation: "generation-i",
-        color: "green",
-      },
-    {
-        id: 1,
-        name: "Bulbasaur",
-        type: [
-            {
-            name: "grass"
-            },
-            {
-            name: "poison"
-            },
-        ],
-        generation: "generation-i",
-        color: "green",
-    },
-  ]
+import { useEffect, useRef } from "react"
+import axios from "axios"
 
 export function Cart() {
   const refModal = useRef(null)
@@ -69,6 +11,7 @@ export function Cart() {
   const isModal = useCartModal((state) => state.isModal)
   const listPokemon = useListPokemonCart((state) => state.listCart)
   const removePokemonOnList = useListPokemonCart((state) => state.removePokemonOnList)
+  const cleanList = useListPokemonCart((state) => state.cleanList)
 
   useEffect(() => {
       document.body.style.overflow = "hidden"
@@ -88,8 +31,13 @@ export function Cart() {
     removePokemonOnList(listPokemon.filter(list => list.id !== pokemon.id))
   }
 
-  function savePokemonInDatabase() {
-    console.log(listPokemon)
+  async function savePokemonInDatabase() {
+    const respo = await axios.post("http://localhost:3000/api/capture-pokemon", listPokemon)
+    if(respo.status === 200) {
+      console.log("CAIU aqui")
+      cleanList()
+      closeCartModal()
+    }
   }
 
   return (
@@ -135,7 +83,7 @@ export function Cart() {
                   </div>
                   <ul>
                       {pokemon?.type?.map((type, i) => (
-                          <li key={i}>{type.type.name}</li>
+                          <li key={i}>{type.name}</li>
                       ))}
                   </ul>
                   <div className="">
