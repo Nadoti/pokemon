@@ -10,4 +10,4 @@ com tudo já feito, inicia o projeto com yarn dev, e entre na porta que for soli
 
 
 
-O projeto funciona da seguinte maneira, há uma lista de pokemons até a quinta geração, você pode colocar os pokemos no seu carrinho para capturar, cada card do pokemon tem o botao para ver detalhes, lá encontrá atributos de cada pokemon. no header tem um link, onde enviará para a lista de pokemons capturado, tem o botão de deletar e o de modificar os status de acordo com o que você quiser, o projeto contem os metodos HTTP  GET,DELETE,PATCH e POST, aplicação está responsiva.
+O projeto funciona da seguinte maneira, há uma lista de pokemons até a quinta geração, você pode colocar os pokemos no seu carrinho para capturar, cada card do pokemon tem o botao para ver detalhes, lá encontrá atributos de cada pokemon. no header tem um link, onde enviará para a lista de pokemons capturado, tem o botão de deletar e o de modificar os status de acordo com o que você quiser, o projeto contem os metodos HTTP  GET,DELETE,PATCH e POST, aplicação está responsiva. Para uma melhor experiencia para o usuario, contem notificações para saber o que acontece para os eventos.
