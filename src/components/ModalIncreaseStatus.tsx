@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios"
 import { toast } from 'react-toastify';
+import { BtnCloseModal } from "./ui/BtnCloseModal";
 
-export function ModalIncreaseStatus({ pokemonId, status, setIsModalOpen }) {
+export function ModalIncreaseStatus({ pokemonId, status, setIsModalOpen, isModalOpen }) {
   const [isFocused, setIsFocused] = useState(false);
-
+  const refModal = useRef(null)
   const statusValues = status?.reduce((acc, val) => {
     return {
       ...acc,
@@ -32,26 +33,28 @@ export function ModalIncreaseStatus({ pokemonId, status, setIsModalOpen }) {
     if(response.status === 200) {
       toast.success('Update Success!', {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
       });
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000);
     }
   }
 
 
   return (
     <section className="flex items-center justify-center fixed inset-0 z-30 w-full h-screen bg-slate-950 bg-opacity-50">
-      <div className="text-black bg-white py-4 px-10 rounded-lg relative">
-        <button
-          onClick={() => setIsModalOpen(false)}
-          className="w-12 h-12 absolute top-0 right-0 border-2 border-red-500 text-red-500 font-bold rounded-s-md transition-all hover:text-white hover:bg-red-500"
-        >
-          X
-        </button>
+      <div className="text-black bg-white py-4 px-10 rounded-lg relative" ref={refModal}>
+        <BtnCloseModal
+          isModal={isModalOpen}
+          refModal={refModal}
+          closeModal={setIsModalOpen}
+        />
         <ul className="flex flex-col py-10">
           {status?.map((info, i) => (
             <div className="relative mt-4" key={i}>

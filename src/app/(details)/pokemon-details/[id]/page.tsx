@@ -27,7 +27,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
     })
 
     return (
-        <main className="w-full h-screen grid grid-cols-2">
+        <main className="w-full h-screen grid lg:grid-cols-2 grid-cols-1">
             <div className="flex flex-col items-center justify-center">
                 <div className="mb-20 text-left w-full max-w-[30rem]">
                     <Link href='/' className="w-20 h-20 flex items-center justify-center border border-gray-500 rounded-full transition-all hover:bg-gray-500 hover:text-white">
@@ -54,7 +54,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                         fill
                     />
                 </div>
-                <div className="w-full max-w-[30rem] flex flex-col gap-5">
+                <div className="w-full max-w-[30rem] flex flex-col gap-5 lg:items-start items-center">
                     <h1 className="text-3xl font-bold capitalize">{response?.data.name}</h1>
                     <div className="flex items-center gap-10">
                         <span className="">
@@ -68,7 +68,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                     </div>
                 </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center justify-center lg:text-left lg:mt-0 mt-8 text-center">
                 <div className="w-full max-w-[50rem]">
                     <div className="mb-5">
                         <p className="font-bold text-xl">Description: </p>
@@ -90,7 +90,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                             ))}
                         </ul>
                     </div>
-                    <div className="flex gap-10 mb-5">
+                    <div className="flex gap-10 mb-5 lg:justify-normal justify-center">
                         <div>
                             <h2 className="font-bold text-xl">Habitat</h2>
                             <p>{response?.data.habitat.name}</p>
@@ -110,10 +110,10 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                     </div>
                     <div>
                         <h2 className="font-bold text-xl">Attributes</h2>
-                        <ul className="flex flex-col gap-2">
+                        <ul className="flex flex-col  gap-2 pb-4">
                             {results?.data.stats.map((attribute, index) => (
-                                <div key={index} className="flex gap-2">
-                                    <span>{attribute.stat.name}:</span>
+                                <div key={index} className="flex flex-col gap-2">
+                                    <span className="font-bold lg:font-normal">{attribute.stat.name}:</span>
                                     <li>
                                         {attribute.base_stat}
                                     </li>

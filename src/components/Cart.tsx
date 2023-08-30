@@ -2,9 +2,10 @@
 import { useListPokemonCart } from "@/stateGlobal/listPokemonCart"
 import { useCartModal } from "@/stateGlobal/modalCartStore"
 import Image from "next/image"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import axios from "axios"
 import { toast } from 'react-toastify';
+import { BtnCloseModal } from "./ui/BtnCloseModal"
 
 export function Cart() {
   const refModal = useRef(null)
@@ -14,19 +15,7 @@ export function Cart() {
   const removePokemonOnList = useListPokemonCart((state) => state.removePokemonOnList)
   const cleanList = useListPokemonCart((state) => state.cleanList)
 
-  useEffect(() => {
-      document.body.style.overflow = "hidden"
-      const checkIfClickedOutside = (e: MouseEvent) => {
-        if (isModal && refModal.current && !refModal.current.contains(e.target)) {
-          closeCartModal()
-        }
-      }
-      document.addEventListener("mousedown", checkIfClickedOutside)
-      return () => {
-        document.removeEventListener("mousedown", checkIfClickedOutside)
-        document.body.style.overflow = "auto"
-      }
-  }, [isModal, closeCartModal])
+  
 
   function removePokemonCart(pokemon) {
     removePokemonOnList(listPokemon.filter(list => list.id !== pokemon.id))
@@ -73,6 +62,11 @@ export function Cart() {
         >
           X
         </button>
+        <BtnCloseModal 
+          isModal={isModal}
+          refModal={refModal}
+          closeModal={closeCartModal}
+        />
         <div className="h-full flex flex-col justify-between">
             <div className="text-center pt-10 mb-5">
                 <h1 className="text-3xl text-gray-700">Lista de Pokemons</h1>

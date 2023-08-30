@@ -11,10 +11,11 @@ export function MyPokemonsCapture() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   
   const {data: response, isLoading} = useQuery({
-    queryKey: [`listPokemonCapture`],
+    queryKey: [`listPokemonCapture`, []],
     queryFn: async () => 
-        axios.get(`http://localhost:3000/api/take-all-pokemon`),
-        staleTime: 100000,
+      axios.get(`http://localhost:3000/api/take-all-pokemon`),
+      enabled: true,
+      manual: true,
   })
   const [pokemonSelected, setPokemonSelected] = useState({})
 
@@ -120,6 +121,7 @@ export function MyPokemonsCapture() {
                   pokemonId={pokemonSelected?.id}
                   status={pokemonSelected?.status}
                   setIsModalOpen={setIsModalOpen}
+                  isModalOpen={isModalOpen}
                 />
               )}
             </div>
