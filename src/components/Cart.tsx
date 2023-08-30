@@ -7,6 +7,10 @@ import axios from "axios"
 import { toast } from 'react-toastify';
 import { BtnCloseModal } from "./ui/BtnCloseModal"
 
+interface removePokemonProps {
+  id: number
+}
+
 export function Cart() {
   const refModal = useRef(null)
   const closeCartModal = useCartModal((state) => state.closeCartModal)
@@ -17,8 +21,8 @@ export function Cart() {
 
   
 
-  function removePokemonCart(pokemon) {
-    removePokemonOnList(listPokemon.filter(list => list.id !== pokemon.id))
+  function removePokemonCart(pokemon: removePokemonProps) {
+    removePokemonOnList(listPokemon.filter((list: {id:number}) => list.id !== pokemon.id))
   }
 
   async function savePokemonInDatabase() {

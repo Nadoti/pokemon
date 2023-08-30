@@ -5,7 +5,18 @@ import axios from "axios"
 import { toast } from 'react-toastify';
 import { BtnCloseModal } from "./ui/BtnCloseModal";
 
-export function ModalIncreaseStatus({ pokemonId, status, setIsModalOpen, isModalOpen }) {
+interface ModalIncreaseProps {
+  pokemonId: number;
+  status: {
+    id: number;
+    baseStatus: number;
+    name: string
+  }, 
+  setIsModalOpen: () => void;
+  isModalOpen: boolean;
+}
+
+export function ModalIncreaseStatus({ pokemonId, status, setIsModalOpen, isModalOpen }: ModalIncreaseProps) {
   const [isFocused, setIsFocused] = useState(false);
   const refModal = useRef(null)
   const statusValues = status?.reduce((acc, val) => {
@@ -62,7 +73,7 @@ export function ModalIncreaseStatus({ pokemonId, status, setIsModalOpen, isModal
                 type='number'
                 name={info.name}
                 value={valueInput[info.name]}
-                onChange={({target}) => setValueInput((prevValue) => ({
+                onChange={({target}: React.ChangeEvent<HTMLInputElement>) => setValueInput((prevValue) => ({
                   ...prevValue,
                   [target.name]: Number(target.value)
                 })) }

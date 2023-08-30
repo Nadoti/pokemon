@@ -1,13 +1,18 @@
-import { useEffect } from "react"
+import { RefObject, useEffect } from "react"
 
+interface BtnProps {
+  isModal: boolean;
+  refModal: RefObject<HTMLDivElement>;
+  closeModal: (data: boolean) => void
+}
 
-export function BtnCloseModal({isModal, refModal, closeModal}) {
+export function BtnCloseModal({isModal, refModal, closeModal}: BtnProps) {
 
   useEffect(() => {
     document.body.style.overflow = "hidden"
     const checkIfClickedOutside = (e: MouseEvent) => {
       if (isModal && refModal.current && !refModal.current.contains(e.target)) {
-        closeModal()
+        closeModal(false)
       }
     }
     document.addEventListener("mousedown", checkIfClickedOutside)

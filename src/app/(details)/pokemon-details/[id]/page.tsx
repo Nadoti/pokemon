@@ -5,6 +5,20 @@ import Image from "next/image"
 import Link from "next/link"
 import { Fragment } from "react"
 
+interface FlavorTextEntry {
+    flavor_text: string;
+    language: {
+      name: string;
+    };
+}
+
+interface AttributesProps {
+    base_stat: string, 
+    stat: {
+        name: string
+    }
+}
+
 export default function DetailsPokemon({ params }: { params: { id: string } }) {
     const {data: response, isLoading: loading, isError: error} = useQuery({
         queryKey: [`pokemonSpecies${params.id}`],
@@ -22,7 +36,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
             staleTime: 100000,
     })
 
-    const description = response?.data.flavor_text_entries.find((description) => {
+    const description = response?.data.flavor_text_entries.find((description: FlavorTextEntry) => {
         return description.language.name === 'en'
     })
 
@@ -35,7 +49,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                     </Link>
                 </div>
                 <span className="flex gap-5 mb-20">
-                    {results?.data.types.map(({type}, index) => (
+                    {results?.data.types.map(({type}: {type:{name: string}}, index: number) => (
                         <Fragment key={index}>
                             <p className={` bg-gray-300 py-2 px-6 rounded-xl text-black`}>{type.name}</p>
                         </Fragment>
@@ -81,7 +95,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                     <div className="mb-5">
                         <h2 className="font-bold text-xl">Abilities:</h2>
                         <ul>
-                            {results?.data.abilities.map(({ability}, index) => (
+                            {results?.data.abilities.map(({ability}: {ability: {name: string}}, index: number) => (
                                 <Fragment key={index}>
                                     <li>
                                         {ability.name}
@@ -98,7 +112,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                         <div>
                             <h2 className="font-bold text-xl">Egg Groups</h2>
                             <ul>
-                                {response?.data.egg_groups.map((egg, index) => (
+                                {response?.data.egg_groups.map((egg:{name: string}, index: number) => (
                                     <Fragment key={index}>
                                         <li>
                                             {egg.name}
@@ -111,7 +125,7 @@ export default function DetailsPokemon({ params }: { params: { id: string } }) {
                     <div>
                         <h2 className="font-bold text-xl">Attributes</h2>
                         <ul className="flex flex-col  gap-2 pb-4">
-                            {results?.data.stats.map((attribute, index) => (
+                            {results?.data.stats.map((attribute: AttributesProps, index: number) => (
                                 <div key={index} className="flex flex-col gap-2">
                                     <span className="font-bold lg:font-normal">{attribute.stat.name}:</span>
                                     <li>

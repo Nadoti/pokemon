@@ -6,10 +6,11 @@ import { useCartModal } from "@/stateGlobal/modalCartStore";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react'
+import { StateCartModal } from '../stateGlobal/modalCartStore'
 
 
 export default function Home() {
-  const isModal = useCartModal((state) => state.isModal)
+  const isModal = useCartModal((state: StateCartModal) => state.isModal)
   return (
     <section className="w-full">
       <div className="w-full bg-[#F8F4F4]">

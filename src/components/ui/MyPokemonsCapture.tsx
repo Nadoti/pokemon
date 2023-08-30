@@ -7,6 +7,21 @@ import { Fragment, useEffect, useState } from "react";
 import { ModalIncreaseStatus } from "../ModalIncreaseStatus";
 import { toast } from 'react-toastify';
 
+interface Pokemon {
+  id: number;
+  name: string;
+  generation: string;
+  color: string;
+  type: {
+    name: string;
+  }[];
+  status: {
+    name: string;
+    baseStatus: number;
+  }[];
+}
+
+
 export function MyPokemonsCapture() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   
@@ -17,7 +32,7 @@ export function MyPokemonsCapture() {
       enabled: true,
       manual: true,
   })
-  const [pokemonSelected, setPokemonSelected] = useState({})
+  const [pokemonSelected, setPokemonSelected] = useState<Pokemon>()
 
   useEffect(() => {
     setPokemonSelected(!isLoading ? response?.data[0] : {})
@@ -26,7 +41,7 @@ export function MyPokemonsCapture() {
 
   async function deletePokemon() {
     const body = {
-      id: pokemonSelected.id
+      id: pokemonSelected?.id
     }
     const response = await axios.post("http://localhost:3000/api/delete-pokemon", body)
     if(response.status === 200) {
@@ -58,7 +73,7 @@ export function MyPokemonsCapture() {
         <div className="grid grid-cols-1 lg:grid-cols-2 pt-8">
           <div className="flex items-center justify-center pb-8">
             <div className="flex flex-col gap-4 w-full max-w-xs h-96 pt-4 shadow-md shadow-gray-400 overflow-y-scroll text-center">
-              {response.data.map(pokemon => (
+              {response.data.map((pokemon: Pokemon) => (
                 <div key={pokemon.id} className="w-full">
                   <button
                     onClick={() => setPokemonSelected(pokemon)}
